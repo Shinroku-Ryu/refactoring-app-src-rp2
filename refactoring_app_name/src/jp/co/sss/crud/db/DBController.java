@@ -94,10 +94,10 @@ public class DBController {
 	 * @throws IOException            入力処理でエラーが発生した場合に送出
 	 */
 	public static void findByEmpName() throws ClassNotFoundException, SQLException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader nameReader = new BufferedReader(new InputStreamReader(System.in));
 
 		// 検索ワード
-		String searchWord = br.readLine();
+		String searchWord = nameReader.readLine();
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -229,12 +229,12 @@ public class DBController {
 				System.out.print("\t");
 
 				String deptIdString = resultSet.getString("dept_id");
-				int deptId2 = Integer.parseInt(deptIdString);
-				if (deptId2 == 1) {
+				int selectedDeptId = Integer.parseInt(deptIdString);
+				if (selectedDeptId == 1) {
 					System.out.println("営業部");
-				} else if (deptId2 == 2) {
+				} else if (selectedDeptId == 2) {
 					System.out.println("経理部");
-				} else if (gender == 3) {
+				} else if (selectedDeptId == 3) {
 					System.out.println("総務部");
 
 				}
@@ -277,8 +277,8 @@ public class DBController {
 			// 入力値をバインド
 			preparedStatement.setString(1, empName);
 			preparedStatement.setInt(2, Integer.parseInt(gender));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
+			SimpleDateFormat birthDate = new SimpleDateFormat("yyyy/MM/dd");
+			preparedStatement.setObject(3, birthDate.parse(birthday), Types.DATE);
 			preparedStatement.setInt(4, Integer.parseInt(deptId));
 
 			// SQL文を実行
@@ -305,7 +305,7 @@ public class DBController {
 			throws ClassNotFoundException, SQLException, IOException, ParseException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader empReader = new BufferedReader(new InputStreamReader(System.in));
 
 		try {
 			// データベースに接続
@@ -315,23 +315,23 @@ public class DBController {
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
 
 			System.out.print("社員名：");
-			String emp_name = br.readLine();
+			String empName = empReader.readLine();
 			// 性別を入力
 			System.out.print("性別(0:回答しない, 1:男性, 2:女性, 9:その他):");
-			String gender = br.readLine();
+			String gender = empReader.readLine();
 			// 誕生日を入力
 			System.out.print("生年月日(西暦年/月/日)：");
-			String birthday = br.readLine();
+			String birthday = empReader.readLine();
 
 			// 部署IDを入力
 			System.out.print("部署ID(1：営業部、2：経理部、3：総務部)：");
-			String deptId = br.readLine();
+			String deptId = empReader.readLine();
 
 			// 入力値をバインド
-			preparedStatement.setString(1, emp_name);
+			preparedStatement.setString(1, empName);
 			preparedStatement.setInt(2, Integer.parseInt(gender));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			preparedStatement.setObject(3, sdf.parse(birthday), Types.DATE);
+			SimpleDateFormat birthDate = new SimpleDateFormat("yyyy/MM/dd");
+			preparedStatement.setObject(3, birthDate.parse(birthday), Types.DATE);
 			preparedStatement.setInt(4, Integer.parseInt(deptId));
 			preparedStatement.setInt(5, Integer.parseInt(empId));
 
@@ -356,12 +356,12 @@ public class DBController {
 	public static void deleteEmp() {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader empReader = new BufferedReader(new InputStreamReader(System.in));
 
 		try {
 			// データベースに接続
 			connection = DBManager.getConnection();
-			String empId = br.readLine();
+			String empId = empReader.readLine();
 
 			// ステートメントの作成
 			preparedStatement = connection.prepareStatement(ConstantSQL.SQL_DELETE);
