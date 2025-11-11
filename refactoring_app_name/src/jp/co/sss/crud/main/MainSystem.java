@@ -78,10 +78,10 @@ public class MainSystem {
 				System.out.print("生年月日(西暦年/月/日):");
 				String birthday = reader.readLine();
 				System.out.print("部署ID(1:営業部、2:経理部、3:総務部):");
-				String showDeptId = reader.readLine();
+				String inputDeptId = reader.readLine();
 
 				// 登録機能の呼出
-				DBController.insertEmp(empName, gender, birthday, showDeptId);
+				DBController.insertEmp(empName, gender, birthday, inputDeptId);
 				break;
 
 			case 5:
