@@ -6,7 +6,7 @@ package jp.co.sss.crud.util;
  * @author 劉
  * 
  */
-public class DBConstant {
+public class ConstantDB {
 	
 	//性別コード
 	public static final int GENDER_MALE = 1;
